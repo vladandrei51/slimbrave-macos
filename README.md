@@ -54,7 +54,6 @@ This script automates the process using the `defaults` command to apply multiple
 
 ```bash
 # Download the script
-curl -O https://raw.githubusercontent.com/yourusername/slimbrave-macos/main/slimbrave.sh
 
 # Make it executable
 chmod +x slimbrave.sh
