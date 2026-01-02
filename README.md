@@ -50,8 +50,6 @@ This script automates the process using the `defaults` command to apply multiple
 
 ## I'm sold, how to use it?
 
-### Quick Install
-
 ```bash
 # Download the script
 
@@ -59,24 +57,6 @@ This script automates the process using the `defaults` command to apply multiple
 chmod +x slimbrave.sh
 
 # Run it
-./slimbrave.sh
-```
-
-### Manual Install
-
-1. Clone this repository:
-```bash
-git clone https://github.com/yourusername/slimbrave-macos.git
-cd slimbrave-macos
-```
-
-2. Make the script executable:
-```bash
-chmod +x slimbrave.sh
-```
-
-3. Run the script:
-```bash
 ./slimbrave.sh
 ```
 
