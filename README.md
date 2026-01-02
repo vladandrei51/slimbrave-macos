@@ -2,6 +2,10 @@
 
 A lightweight, interactive script to debloat Brave Browser on macOS by disabling telemetry, unwanted features, and promotional content through policy preferences.
 
+<img width="789" height="619" alt="image" src="https://github.com/user-attachments/assets/96f97527-d109-41b4-ac31-45d25781df74" />
+
+<img width="789" height="619" alt="image" src="https://github.com/user-attachments/assets/1b934934-4d77-4cbc-8cc5-39a93b6ccc28" />
+
 ## What It Does
 
 SlimBrave removes bloat from Brave Browser while keeping its core privacy features intact. It offers two modes:
@@ -90,12 +94,6 @@ chmod +x slimbrave.sh
 # Run it
 ./slimbrave.sh
 ```
-
-<img width="789" height="619" alt="image" src="https://github.com/user-attachments/assets/96f97527-d109-41b4-ac31-45d25781df74" />
-
-<img width="789" height="619" alt="image" src="https://github.com/user-attachments/assets/1b934934-4d77-4cbc-8cc5-39a93b6ccc28" />
-
-
 
 You'll see 5 options:
 
