@@ -77,7 +77,14 @@ is_setting_enabled() {
     local value=$(defaults read "$PLIST_DOMAIN" "$key" 2>/dev/null)
     
     if [ $? -eq 0 ]; then
-        echo "$value"
+        # Convert 1/0 to true/false for consistency
+        if [ "$value" = "1" ]; then
+            echo "true"
+        elif [ "$value" = "0" ]; then
+            echo "false"
+        else
+            echo "$value"
+        fi
     else
         echo "not_set"
     fi
@@ -89,52 +96,52 @@ apply_quick_preset() {
     echo ""
     echo "${BLUE}[Telemetry & Privacy]${NC}"
     
-    apply_setting "MetricsReportingEnabled" 0 "integer"
+    apply_setting "MetricsReportingEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Metrics Reporting"
     
-    apply_setting "SafeBrowsingExtendedReportingEnabled" 0 "integer"
+    apply_setting "SafeBrowsingExtendedReportingEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Safe Browsing Extended Reporting"
     
-    apply_setting "UrlKeyedAnonymizedDataCollectionEnabled" 0 "integer"
+    apply_setting "UrlKeyedAnonymizedDataCollectionEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled URL Data Collection"
     
-    apply_setting "FeedbackSurveysEnabled" 0 "integer"
+    apply_setting "FeedbackSurveysEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Feedback Surveys"
     
     echo ""
     echo "${BLUE}[Brave Features]${NC}"
     
-    apply_setting "BraveRewardsDisabled" 1 "integer"
+    apply_setting "BraveRewardsDisabled" true "bool"
     echo "${GREEN}✓${NC} Disabled Brave Rewards"
     
-    apply_setting "BraveWalletDisabled" 1 "integer"
+    apply_setting "BraveWalletDisabled" true "bool"
     echo "${GREEN}✓${NC} Disabled Brave Wallet"
     
-    apply_setting "BraveVPNDisabled" 1 "integer"
+    apply_setting "BraveVPNDisabled" true "bool"
     echo "${GREEN}✓${NC} Disabled Brave VPN"
     
-    apply_setting "BraveAIChatEnabled" 0 "integer"
+    apply_setting "BraveAIChatEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Brave AI Chat"
     
-    apply_setting "TorDisabled" 1 "integer"
+    apply_setting "TorDisabled" true "bool"
     echo "${GREEN}✓${NC} Disabled Tor"
     
     echo ""
     echo "${BLUE}[Bloat Removal]${NC}"
     
-    apply_setting "ShoppingListEnabled" 0 "integer"
+    apply_setting "ShoppingListEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Shopping List"
     
-    apply_setting "AlwaysOpenPdfExternally" 1 "integer"
+    apply_setting "AlwaysOpenPdfExternally" true "bool"
     echo "${GREEN}✓${NC} Set PDFs to Open Externally"
     
-    apply_setting "TranslateEnabled" 0 "integer"
+    apply_setting "TranslateEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Translate"
     
-    apply_setting "SpellcheckEnabled" 0 "integer"
+    apply_setting "SpellcheckEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Spellcheck"
     
-    apply_setting "PromotionsEnabled" 0 "integer"
+    apply_setting "PromotionsEnabled" false "bool"
     echo "${GREEN}✓${NC} Disabled Promotions"
     
     echo ""
@@ -180,51 +187,51 @@ customize_category() {
     case "$category" in
         "Telemetry & Privacy")
             show_category_header "$category"
-            toggle_setting "MetricsReportingEnabled" "Disable Metrics Reporting" 0 "integer"
-            toggle_setting "SafeBrowsingExtendedReportingEnabled" "Disable Safe Browsing Extended Reporting" 0 "integer"
-            toggle_setting "UrlKeyedAnonymizedDataCollectionEnabled" "Disable URL Data Collection" 0 "integer"
-            toggle_setting "FeedbackSurveysEnabled" "Disable Feedback Surveys" 0 "integer"
+            toggle_setting "MetricsReportingEnabled" "Disable Metrics Reporting" "false" "bool"
+            toggle_setting "SafeBrowsingExtendedReportingEnabled" "Disable Safe Browsing Extended Reporting" "false" "bool"
+            toggle_setting "UrlKeyedAnonymizedDataCollectionEnabled" "Disable URL Data Collection" "false" "bool"
+            toggle_setting "FeedbackSurveysEnabled" "Disable Feedback Surveys" "false" "bool"
             ;;
-            
+
         "Privacy & Security")
             show_category_header "$category"
             toggle_setting "SafeBrowsingProtectionLevel" "Disable Safe Browsing" 0 "integer"
-            toggle_setting "AutofillAddressEnabled" "Disable Autofill (Addresses)" 0 "integer"
-            toggle_setting "AutofillCreditCardEnabled" "Disable Autofill (Credit Cards)" 0 "integer"
-            toggle_setting "PasswordManagerEnabled" "Disable Password Manager" 0 "integer"
+            toggle_setting "AutofillAddressEnabled" "Disable Autofill (Addresses)" "false" "bool"
+            toggle_setting "AutofillCreditCardEnabled" "Disable Autofill (Credit Cards)" "false" "bool"
+            toggle_setting "PasswordManagerEnabled" "Disable Password Manager" "false" "bool"
             toggle_setting "BrowserSignin" "Disable Browser Sign-in" 0 "integer"
             toggle_setting "WebRtcIPHandling" "Disable WebRTC IP Leak" "disable_non_proxied_udp" "string"
-            toggle_setting "QuicAllowed" "Disable QUIC Protocol" 0 "integer"
-            toggle_setting "BlockThirdPartyCookies" "Block Third Party Cookies" 1 "integer"
-            toggle_setting "EnableDoNotTrack" "Enable Do Not Track" 1 "integer"
-            toggle_setting "ForceGoogleSafeSearch" "Force Google SafeSearch" 1 "integer"
-            toggle_setting "IPFSEnabled" "Disable IPFS" 0 "integer"
+            toggle_setting "QuicAllowed" "Disable QUIC Protocol" "false" "bool"
+            toggle_setting "BlockThirdPartyCookies" "Block Third Party Cookies" "true" "bool"
+            toggle_setting "EnableDoNotTrack" "Enable Do Not Track" "true" "bool"
+            toggle_setting "ForceGoogleSafeSearch" "Force Google SafeSearch" "true" "bool"
+            toggle_setting "IPFSEnabled" "Disable IPFS" "false" "bool"
             toggle_setting "IncognitoModeAvailability" "Disable Incognito Mode" 1 "integer"
             ;;
-            
+
         "Brave Features")
             show_category_header "$category"
-            toggle_setting "BraveRewardsDisabled" "Disable Brave Rewards" 1 "integer"
-            toggle_setting "BraveWalletDisabled" "Disable Brave Wallet" 1 "integer"
-            toggle_setting "BraveVPNDisabled" "Disable Brave VPN" 1 "integer"
-            toggle_setting "BraveAIChatEnabled" "Disable Brave AI Chat" 0 "integer"
-            toggle_setting "TorDisabled" "Disable Tor" 1 "integer"
-            toggle_setting "SyncDisabled" "Disable Sync" 1 "integer"
+            toggle_setting "BraveRewardsDisabled" "Disable Brave Rewards" "true" "bool"
+            toggle_setting "BraveWalletDisabled" "Disable Brave Wallet" "true" "bool"
+            toggle_setting "BraveVPNDisabled" "Disable Brave VPN" "true" "bool"
+            toggle_setting "BraveAIChatEnabled" "Disable Brave AI Chat" "false" "bool"
+            toggle_setting "TorDisabled" "Disable Tor" "true" "bool"
+            toggle_setting "SyncDisabled" "Disable Sync" "true" "bool"
             ;;
-            
+
         "Performance & Bloat")
             show_category_header "$category"
-            toggle_setting "BackgroundModeEnabled" "Disable Background Mode" 0 "integer"
-            toggle_setting "MediaRecommendationsEnabled" "Disable Media Recommendations" 0 "integer"
-            toggle_setting "ShoppingListEnabled" "Disable Shopping List" 0 "integer"
-            toggle_setting "AlwaysOpenPdfExternally" "Always Open PDF Externally" 1 "integer"
-            toggle_setting "TranslateEnabled" "Disable Translate" 0 "integer"
-            toggle_setting "SpellcheckEnabled" "Disable Spellcheck" 0 "integer"
-            toggle_setting "PromotionsEnabled" "Disable Promotions" 0 "integer"
-            toggle_setting "SearchSuggestEnabled" "Disable Search Suggestions" 0 "integer"
-            toggle_setting "PrintingEnabled" "Disable Printing" 0 "integer"
-            toggle_setting "DefaultBrowserSettingEnabled" "Disable Default Browser Prompt" 0 "integer"
-            toggle_setting "DeveloperToolsDisabled" "Disable Developer Tools" 1 "integer"
+            toggle_setting "BackgroundModeEnabled" "Disable Background Mode" "false" "bool"
+            toggle_setting "MediaRecommendationsEnabled" "Disable Media Recommendations" "false" "bool"
+            toggle_setting "ShoppingListEnabled" "Disable Shopping List" "false" "bool"
+            toggle_setting "AlwaysOpenPdfExternally" "Always Open PDF Externally" "true" "bool"
+            toggle_setting "TranslateEnabled" "Disable Translate" "false" "bool"
+            toggle_setting "SpellcheckEnabled" "Disable Spellcheck" "false" "bool"
+            toggle_setting "PromotionsEnabled" "Disable Promotions" "false" "bool"
+            toggle_setting "SearchSuggestEnabled" "Disable Search Suggestions" "false" "bool"
+            toggle_setting "PrintingEnabled" "Disable Printing" "false" "bool"
+            toggle_setting "DefaultBrowserSettingEnabled" "Disable Default Browser Prompt" "false" "bool"
+            toggle_setting "DeveloperToolsDisabled" "Disable Developer Tools" "true" "bool"
             ;;
             
         "DNS Settings")
@@ -256,10 +263,15 @@ toggle_setting() {
     local status
     local help_text
     
+    # Normalize target_value for comparison
+    local normalized_target="$target_value"
+    
     # Determine if this is a "disable" or "enable" type setting
     if [[ "$description" == Disable* ]]; then
-        # For "Disable X" settings
-        if [ "$current" = "$target_value" ]; then
+        # For "Disable X" settings (like "Disable Brave Rewards")
+        # target_value is what we SET to disable the feature
+        # For "Disable Brave Rewards", target is "true" (BraveRewardsDisabled=true means disabled)
+        if [ "$current" = "$normalized_target" ]; then
             status="${GREEN}✓ ACTIVE${NC}"
             help_text="${GREEN}(feature is disabled)${NC}"
         elif [ "$current" = "not_set" ]; then
@@ -271,7 +283,7 @@ toggle_setting() {
         fi
     elif [[ "$description" == Enable* ]] || [[ "$description" == Block* ]] || [[ "$description" == Force* ]]; then
         # For "Enable X" or "Block X" settings
-        if [ "$current" = "$target_value" ]; then
+        if [ "$current" = "$normalized_target" ]; then
             status="${GREEN}✓ ACTIVE${NC}"
             help_text="${GREEN}(feature is enabled)${NC}"
         elif [ "$current" = "not_set" ]; then
@@ -283,7 +295,7 @@ toggle_setting() {
         fi
     else
         # For other settings (like "Always Open PDF")
-        if [ "$current" = "$target_value" ]; then
+        if [ "$current" = "$normalized_target" ]; then
             status="${GREEN}✓ ACTIVE${NC}"
             help_text=""
         elif [ "$current" = "not_set" ]; then
