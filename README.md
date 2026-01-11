@@ -6,6 +6,8 @@ A lightweight, interactive script to debloat Brave Browser on macOS by disabling
 
 <img width="789" height="619" alt="image" src="https://github.com/user-attachments/assets/1b934934-4d77-4cbc-8cc5-39a93b6ccc28" />
 
+<img width="1835" height="1162" alt="image" src="https://github.com/user-attachments/assets/e57b81bc-2ede-421f-814f-00beea2e6c9d" />
+
 ## What It Does
 
 SlimBrave removes bloat from Brave Browser while keeping its core privacy features intact. It offers two modes:
